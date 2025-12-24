@@ -153,13 +153,13 @@ int physfs_lua_dumpfile(lua_State *L, const char *filename, int strip) {
 	return status;
 }
 
-int luaopen_physfs_searchpath(lua_State *L) {
-	lua_pushcfunction(L, physfs_searchpath);
-	return 1;
-}
-
-int luaopen_physfs_lua_searcher(lua_State *L) {
-	lua_pushcfunction(L, physfs_lua_searcher);
+int luaopen_physfs_lua_require(lua_State *L) {
+	luaL_Reg funcs[] = {
+		{ "searchpath", physfs_searchpath },
+		{ "lua_searcher", physfs_lua_searcher },
+		{ NULL, NULL },
+	};
+	luaL_newlib(L, funcs);
 	return 1;
 }
 
