@@ -101,18 +101,28 @@ int physfs_lua_searcher(lua_State *L) {
 }
 
 int physfs_lua_replace_searchpath(lua_State *L) {
+	int load_result = luaL_loadstring(L, "package.searchpath = ...");
+	if (load_result != LUA_OK) {
+		return load_result;
+	}
 	lua_pushcfunction(L, physfs_searchpath);
-	return luaL_loadstring(L, "package.searchpath = ...") || lua_pcall(L, 1, 0, 0);
+	int call_result = lua_pcall(L, 1, 0, 0);
+	return call_result;
 }
 
 int physfs_lua_replace_lua_searcher(lua_State *L) {
-	lua_pushcfunction(L, physfs_lua_searcher);
 #if LUA_VERSION_NUM >= 502
-	#define searchers "searchers"
+	#define SEARCHERS "searchers"
 #else
-	#define searchers "loaders"
+	#define SEARCHERS "loaders"
 #endif
-	return luaL_loadstring(L, "package."searchers"[2] = ...") || lua_pcall(L, 1, 0, 0);
+	int load_result = luaL_loadstring(L, "package." SEARCHERS "[2] = ...");
+	if (load_result != LUA_OK) {
+		return load_result;
+	}
+	lua_pushcfunction(L, physfs_lua_searcher);
+	int call_result = lua_pcall(L, 1, 0, 0);
+	return call_result;
 }
 
 typedef struct PHYSFS_LuaReader {
