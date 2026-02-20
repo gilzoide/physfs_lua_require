@@ -48,6 +48,17 @@ int physfs_searchpath(lua_State *L);
  */
 int physfs_lua_searcher(lua_State *L);
 
+/**
+ * Replace `package.searchpath` by `physfs_searchpath`.
+ * @return `LUA_OK` if everything went fine, otherwise one of `LUA_ERRRUN` or `LUA_ERRMEM`.
+ */
+int physfs_lua_replace_searchpath(lua_State *L);
+
+/**
+ * Replace `package.searchers[2]` (or `package.loaders[2]` in Lua 5.1) by `physfs_lua_searcher`.
+ * @return `LUA_OK` if everything went fine, otherwise one of `LUA_ERRRUN` or `LUA_ERRMEM`.
+ */
+int physfs_lua_replace_lua_searcher(lua_State *L);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Requireable module
