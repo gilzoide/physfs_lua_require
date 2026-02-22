@@ -23,6 +23,11 @@ int physfs_luaL_loadfilex(lua_State *L, const char *filename, const char *mode);
 #define physfs_luaL_loadfile(L, filename)	physfs_luaL_loadfilex((L), (filename), NULL)
 
 /**
+ * Variant for `luaL_dofile` that uses PhysFS to read and execute file data.  [-0, +?, m]
+ */
+ #define physfs_luaL_dofile(L, filename)	(physfs_luaL_loadfile(L, filename) || lua_pcall(L, 0, LUA_MULTRET, 0))
+
+/**
  * Variant for `lua_dump` that writes into a file using PhysFS.  [-0, +0, –]
  */
 int physfs_lua_dumpfile(lua_State *L, const char *filename, int strip);

@@ -4,7 +4,8 @@ Simple implementation for requiring [Lua](https://www.lua.org/) modules using [P
 
 ## Features
 - C API
-  + Use `physfs_luaL_loadfilex`/`physfs_luaL_loadfile` instead of `luaL_loadfilex`/`physfs_luaL_loadfile` for loading Lua files using PhysFS
+  + Use `physfs_luaL_loadfilex`/`physfs_luaL_loadfile` instead of `luaL_loadfilex`/`luaL_loadfile` for loading Lua files using PhysFS
+  + Use `physfs_luaL_dofile` instead of `luaL_dofile` for loading and running Lua files using PhysFS
   + Use `physfs_lua_dumpfile` as an alternative to `lua_dump` to write to file using PhysFS
   + Use `physfs_lua_replace_searchpath` to replace `package.searchpath` by a PhysFS-enabled alternative
   + Use `physfs_lua_replace_lua_searcher` to replace `package.searchers[2]` (or `package.loaders[2]` if compiling with Lua 5.1) by a PhysFS-enabled alternative
